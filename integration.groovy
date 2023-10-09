@@ -162,14 +162,14 @@ def create_build_jobs(deploymentDirectory){
         stage("${deploymentDirectory}"){
             stage("Deploy ${deploymentDirectory}") {
                 println "Deploying Stack:- ${deploymentDirectory}..."
-                sh'''
-                    ./scripts/deployment-handler.sh '''+deploymentDirectory+''' ${WORKSPACE}/${cloudformation_location} 
-                '''
+//                sh'''
+//                    ./scripts/deployment-handler.sh '''+deploymentDirectory+''' ${WORKSPACE}/${cloudformation_location}
+//                '''
                 stage("Testing ${deploymentDirectory}") {
                     println "Deployment Integration testing..."
                     script {
                         def testGroups = test_groups.split(",")
-                        if (testGroups != null || testGroups.size != 0) {
+                        if (testGroups != null || testGroups.size() != 0) {
                             println "Test Groups ${testGroups}"
 //                            for (productTestGroup in testGroups) {
 //                                println "Deploying Test for ${productTestGroup} for $deploymentDirectory"
