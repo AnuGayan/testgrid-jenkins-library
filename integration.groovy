@@ -162,25 +162,25 @@ def create_build_jobs(deploymentDirectory){
         stage("${deploymentDirectory}"){
             stage("Deploy ${deploymentDirectory}") {
                 println "Deploying Stack:- ${deploymentDirectory}..."
-//                sh'''
-//                    ./scripts/deployment-handler.sh '''+deploymentDirectory+''' ${WORKSPACE}/${cloudformation_location}
-//                '''
+                sh'''
+                    ./scripts/deployment-handler.sh '''+deploymentDirectory+''' ${WORKSPACE}/${cloudformation_location}
+                '''
                 stage("Testing ${deploymentDirectory}") {
                     println "Deployment Integration testing..."
                     script {
                         if (test_groups != "") {
                             def testGroups = test_groups.split(",")
                                 println "Test Groups ${testGroups}"
-    //                            for (productTestGroup in testGroups) {
-    //                                println "Deploying Test for ${productTestGroup} for $deploymentDirectory"
-    //                                executeTests(deploymentDirectory, productTestGroup)
-    //                            }
+                                for (productTestGroup in testGroups) {
+                                    println "Deploying Test for ${productTestGroup} for $deploymentDirectory"
+                                    executeTests(deploymentDirectory, productTestGroup)
+                                }
                         } else {
                             println "Deploying Test for $deploymentDirectory"
-//                            sh '''
-//                                 echo
-//                                 ./scripts/intg-test-deployment.sh ''' + deploymentDirectory + ''' ${product_repository} ${product_test_branch} ${product_test_script}
-//                            '''
+                            sh '''
+                                 echo
+                                 ./scripts/intg-test-deployment.sh ''' + deploymentDirectory + ''' ${product_repository} ${product_test_branch} ${product_test_script}
+                            '''
                         }
                     }
                 }
